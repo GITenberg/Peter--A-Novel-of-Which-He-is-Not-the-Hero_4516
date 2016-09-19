@@ -1,0 +1,61 @@
+sudo: required
+dist: trusty
+language: ruby
+
+before_install:
+before_install:
+- gem install asciidoctor -v 1.5.2
+- gem install tilt
+- sudo pip install git+https://github.com/gitenberg-dev/gitberg
+- sudo pip install pillow
+- sudo pip install cssutils
+- sudo pip install docutils
+- sudo pip install roman
+- sudo pip install git+https://github.com/gitenberg-dev/pg-epubmaker
+script:
+- VERSION=`ruby -e "require 'yaml'; meta = YAML.load_file('metadata.yaml'); puts meta['_version'];"`
+- git clone https://github.com/gitenberg-dev/asciidoctor-htmlbook.git
+- sudo pip install -r asciidoctor-htmlbook/gitberg-machine/requirements.txt
+
+- /usr/bin/python -c "from gitenberg import travis; travis.build_epub()"
+- ebook-convert book.epub book.mobi
+- xvfb-run ebook-convert book.epub book.pdf
+branches:
+  only:
+  - master
+notifications:
+  webhooks:
+    urls:
+      - https://unglue.it/api/travisci/webhook
+    on_success: always
+    on_failure: never
+    on_start: never
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: RKzkY7P4elcHsSggx6N0zLfsrvak1umH2DgFo4z2TxL5JY8MgHkgtGhDsbuh/fvQMSaUbtXP3vjdlSLzIUSj5hAirKaYInKE/0n/K4lzhMaj4nIuM8v1EcHfhEuqWNMrwGDRyiwxMe/8lSwmvWqD0bnfYg0HyLWRkxPBnKu2fFnW+3ue7zrNPTGg8krALYTZQ6kobf/6PCWa9H6rl9cTewCjyUGG0MuGRlLjx2TSnqF7RwFB5KZuhEQfLrd9Uoqf9PSWxSY/h8QkEhYniYUrds7hbIZUYLVpYHxdlqdlmcTTfipW9cPS0xtp9PahLw3+kP1zBjPrG14r2K1aBCBTpSop6kwy4IiaHEQTEkDak/3iGtaT5TeXLjGlQdl4aGXvVVrBnKISYPPlmEbZqkOyin5LaOssgUTw7T0R8rhr0uL5HOG0GGmG+DVEgElRq5JusNE66R6SeqMb43YN7I6u87qFAIbdio7v2wxzuvS6yZrVHU1xHAmtN4NRQMjn0i9jfEuyIIkFwpmyyGT33JfaHpAjyMi5tlNZzsku5XILvCaWeB75FeHrkefPx71xIjppwh2L8O3W0wH2Tltz8Ezx8bAHxrM0BempBoVvrCO7URtrbjK2/UNsddifMLE0GJ1E0WxGTXwaqZux1YhOT7NViuS1cPNIQTpEJqtiAjNGolE=
+  file:
+    - book.epub
+    - book.mobi
+    - book.pdf
+  "on":
+    repo: GITenberg/Peter--A-Novel-of-Which-He-is-Not-the-Hero_4516
+addons:
+  apt:
+    packages:
+    - xsltproc
+    - xvfb
+    - calibre
+    - python-pip
+    - git
+    - python-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-lxml
+    - libxml2-dev
+    - libxslt1-dev
+    - tidy
