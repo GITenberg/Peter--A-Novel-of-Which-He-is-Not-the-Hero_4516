@@ -1,5 +1,8 @@
 _repo: Peter--A-Novel-of-Which-He-is-Not-the-Hero_4516
-_version: 0.1.0
+_version: 0.2.0
+covers:
+- cover_type: generated
+  image_path: cover.png
 creator:
   author:
     agent_name: Smith, Francis Hopkinson
@@ -14,6 +17,8 @@ description: '"... the story of a bank worker and his interfering sister, Felici
   and niece, Ruth and Jack. The work examines the increasing materialism and changing
   attitudes of people at the turn of the 20th century and suggests that the affection
   and support of family elders plays a pivotal role in young peoples'' lives."--Goodreads.'
+edition_identifiers:
+  edition_id: http://www.gutenberg.org/ebooks/4516#Peter--A-Novel-of-Which-He-is-Not-the-Hero
 gutenberg_bookshelf: Bestsellers, American, 1895-1923
 gutenberg_issued: '2003-10-01'
 gutenberg_type: Text
